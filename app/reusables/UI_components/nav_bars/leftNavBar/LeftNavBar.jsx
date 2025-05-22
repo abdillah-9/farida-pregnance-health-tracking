@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import NavBarTemp from '../NavBarTemp';
-import { GiCycle, GiMoneyStack } from '@node_modules/react-icons/gi';
-import { CiMoneyBill } from '@node_modules/react-icons/ci';
-import { HiOutlineUser, HiOutlineUserCircle } from '@node_modules/react-icons/hi2';
-import { RiHeartPulseLine, RiHome9Line, RiHomeHeartLine } from '@node_modules/react-icons/ri';
+import { GiCycle } from '@node_modules/react-icons/gi';
+import { HiOutlineUserCircle } from '@node_modules/react-icons/hi2';
+import { RiHeartPulseLine, RiHomeHeartLine } from '@node_modules/react-icons/ri';
 import useWindowSize from '@app/reusables/CUSTOM_hooks/useWindowSize';
 import { useDispatch, useSelector } from '@node_modules/react-redux/dist/react-redux';
 import Link from '@node_modules/next/link';
@@ -53,7 +52,7 @@ useEffect(() => {
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle_Logo}>
         <NavBarTemp.NavImage imageAttributes={imageAttributes} 
         imageStyle={{color:"red"}}/>
-        <NavBarTemp.NavText navTextStyle={navTextStyle_Logo}>FRANK BUSINESS APP</NavBarTemp.NavText>        
+        <NavBarTemp.NavText navTextStyle={navTextStyle_Logo}>BLOOM-NEST APP</NavBarTemp.NavText>        
       </NavBarTemp.NavContainer> 
 
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle}>
