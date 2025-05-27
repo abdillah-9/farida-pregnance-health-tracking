@@ -26,6 +26,7 @@ export function NavImage({imageAttributes, imageStyle}){
         height={imageAttributes.height}
         width={imageAttributes.width}
         alt={imageAttributes.alt}
+        unoptimized
         />
     )
 }

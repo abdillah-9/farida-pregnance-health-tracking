@@ -65,14 +65,14 @@ useEffect(() => {
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle}>
         <NavBarTemp.NavIcon navIconStyle={navIconStyle}><GiCycle/></NavBarTemp.NavIcon>
           <NavBarTemp.NavText navTextStyle={navTextStyle}>
-            <Link href="/dashboard" onClick={linkClickEvent}>Ovulation Tracker</Link>
+            <Link href="/ovulation" onClick={linkClickEvent}>Ovulation Tracker</Link>
           </NavBarTemp.NavText>        
       </NavBarTemp.NavContainer>
 
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle}>
         <NavBarTemp.NavIcon navIconStyle={navIconStyle}><RiHeartPulseLine/></NavBarTemp.NavIcon>
           <NavBarTemp.NavText navTextStyle={navTextStyle}>
-            <Link href="/dashboard" onClick={linkClickEvent}>Pregnance Monitor</Link>
+            <Link href="/expense" onClick={linkClickEvent}>Pregnance Monitor</Link>
           </NavBarTemp.NavText>        
       </NavBarTemp.NavContainer>
 
@@ -105,7 +105,8 @@ useEffect(() => {
 
 const navContainerStyle_Logo ={
   display:"flex",
-  gap:"9px",
+  gap:"0px",
+  paddingBottom:"15px",
   alignItems:"center",
   flexDirection:"column",
   width:"fit-content"
@@ -118,14 +119,14 @@ const navContainerStyle ={
 }
 
 const navTextStyle_Logo ={
-  color:"rgba(79, 8, 161, 0.76)",
+  color:"rgba(8, 161, 28, 0.76)",
   textAlign:"center",
   fontWeight:500,
   fontSize:"12px",
 }
 
 const navTextStyle ={
-  color:"rgb(8, 8, 8)",
+  color:"rgb(2, 51, 8)",
   textAlign:"left",
   fontSize:"12px",
 }
@@ -139,7 +140,7 @@ const imageAttributes ={
 
 const navIconStyle ={
   fontSize:"21px",
-  color:"rgba(79, 8, 161, 0.76)",
+  color:"rgba(8, 161, 28, 0.76)",
 }
 
 export default LeftNavBar;

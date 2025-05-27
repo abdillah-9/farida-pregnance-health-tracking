@@ -36,10 +36,10 @@ export default function Form() {
     <div style={mainContainer}> 
       <div style={headerCard}>
         <Logo>
-            <Image src="/assets/images/logo.svg" alt="logo" width={80} height={80}/>
+            <Image src="/assets/images/logo.svg" alt="logo" width={90} height={90}/>
         </Logo>
         <FormContainer.Header formHeader={formHeader}>
-            Log in to your account
+            Login to your account
         </FormContainer.Header>
       </div> 
         <FormContainer.Body formBody={formBody}>
@@ -84,7 +84,7 @@ const formContainer ={
     zIndex:3,
 }
 const mainContainer={
-    boxShadow:" 5px 5px 30px rgba(2, 10, 56, 0.92)",
+    boxShadow:" 2px 2px 15px rgba(2, 126, 19, 0.86)",
     backgroundColor:"white",
     display:"flex",
     flexWrap:"wrap",
@@ -114,13 +114,13 @@ const headerCard={
     flexDirection:"column",
     alignItems:"center",
     justifyContent:"center",
-    gap:"20px",
+    gap:"0px",
 }
 const formHeader={
     fontWeight:"600",
     fontSize:"16px",
     textAlign:"center",
-    color:"rgba(41, 1, 87, 0.76)",
+    color:"rgba(1, 143, 20, 0.86)",
 }
 const formRow={
     display: "flex",
@@ -146,7 +146,7 @@ const formRow={
     color: "rgb(10, 10, 24)",
   }
 const submitButton={
-    backgroundColor:"rgba(79, 8, 161, 0.76)",
+    backgroundColor:"rgba(8, 161, 28, 0.76)",
     color:"white",
     padding: "5px",
     borderRadius: "5px",
@@ -162,7 +162,7 @@ const signUpContainer={
     padding:"10px 0px",
 }
 const signUpLink={
-    color:"rgba(41, 1, 87, 0.76)",
+    color:"rgba(1, 143, 20, 0.86)",
     fontWeight:500,
 }
 

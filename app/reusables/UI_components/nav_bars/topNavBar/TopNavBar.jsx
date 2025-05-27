@@ -1,14 +1,13 @@
 "use client";
 import React from 'react'
 import NavBarTemp from '../NavBarTemp'
-import { RiLogoutCircleRLine, RiMenuFoldLine, RiMenuUnfoldLine } from '@node_modules/react-icons/ri'
+import { RiMenuFoldLine, RiMenuUnfoldLine } from '@node_modules/react-icons/ri'
 import useWindowSize from '@app/reusables/CUSTOM_hooks/useWindowSize';
 import { useDispatch, useSelector } from '@node_modules/react-redux/dist/react-redux';
 import { setReduxState } from '@app/provider/redux/reducer';
 import useUser from '@app/authentication/hooks/useUser';
 import useLogOut from '@app/authentication/hooks/useLogOut';
-import toast from '@node_modules/react-hot-toast/dist';
-import { BsArrow90DegRight, BsArrowBarRight, BsArrowRightCircle } from '@node_modules/react-icons/bs';
+import { BsArrowRightCircle } from '@node_modules/react-icons/bs';
 
 export default function TopNavBar() {
 
@@ -94,7 +93,7 @@ const fullNameStyle={
 const icons={
   display:"flex",
   gap:"15px",
-  color:"rgba(79, 8, 161, 0.76)",
+  color:"rgba(8, 161, 28, 0.76)",
   fontSize:"23px",
   cursor:"pointer",
 }

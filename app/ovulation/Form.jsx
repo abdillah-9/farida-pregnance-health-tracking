@@ -6,10 +6,24 @@ import { HiXCircle } from '@node_modules/react-icons/hi2';
 import { useDispatch, useSelector } from '@node_modules/react-redux/dist/react-redux';
 import React from 'react'
 import toast from '@node_modules/react-hot-toast/dist';
-import { GiCycle } from '@node_modules/react-icons/gi';
+import Icon from '@app/reusables/UI_components/Icon';
+import { PiAsteriskDuotone } from '@node_modules/react-icons/pi';
 
-export default function Form({budget, insertDataMutation, updateDataMutation, user}) {
-  let id;let userID;let amount; let name;let description; let date;let photo="";let budgetID;
+export default function Form({ovulation, insertDataMutation, updateDataMutation, user}) {
+  let id,
+    userID,
+    name,
+    age,
+    last_period_date,
+    cycle_length_days,
+    period_duration_days,
+    is_cycle_regular,
+    stress_level,
+    sleep_hours,
+    day_week_exercise,
+    diagnosed_conditions,
+    status,
+    ovulationID;
 
   const {windowSize} = useWindowSize()
   const formState = useSelector((store)=>store.ReduxState.showForm);
@@ -24,14 +38,29 @@ export default function Form({budget, insertDataMutation, updateDataMutation, us
     return
   }  
 
+  console.log("new data is : "+JSON.stringify(ovulation))
   if(newData){
-    ({id,amount,name,description,date,photo,budgetID} = newData)
+({
+  id,
+  userID,
+  name,
+  age,
+  last_period_date,
+  cycle_length_days,
+  period_duration_days,
+  is_cycle_regular,
+  stress_level,
+  sleep_hours,
+  day_week_exercise,
+  diagnosed_conditions,
+  status
+} = newData);
+
   }
   userID = user.id;
 
   function formSubmit(data){
     user? console.log("userID"+ JSON.stringify(data)) :""
-    user? console.log("my photo"+data.photo):""
 
     newData ?
     updateDataMutation({
@@ -43,16 +72,25 @@ export default function Form({budget, insertDataMutation, updateDataMutation, us
     dispatch(setReduxState({showForm: false, overlay:false}));
   }
 
-  function onError(errors){
-    toast.error(
-      errors?.name?.message? errors.name.message :
-      errors?.amount?.message?  errors.amount.message :
-      errors?.status?.message?  errors.status.message :
-      errors?.description?.message?  errors.description.message :
-      errors?.images?.message? errors.images.message :
-      errors?.date?.message?  errors.date.message :""
-    )
-  }
+function onError(errors) {
+  toast.error(
+    errors?.id?.message ? errors.id.message :
+    errors?.userID?.message ? errors.userID.message :
+    errors?.name?.message ? errors.name.message :
+    errors?.age?.message ? errors.age.message :
+    errors?.last_period_date?.message ? errors.last_period_date.message :
+    errors?.cycle_length_days?.message ? errors.cycle_length_days.message :
+    errors?.period_duration_days?.message ? errors.period_duration_days.message :
+    errors?.is_cycle_regular?.message ? errors.is_cycle_regular.message :
+    errors?.stress_level?.message ? errors.stress_level.message :
+    errors?.sleep_hours?.message ? errors.sleep_hours.message :
+    errors?.day_week_exercise?.message ? errors.day_week_exercise.message :
+    errors?.diagnosed_conditions?.message ? errors.diagnosed_conditions.message :
+    errors?.status?.message ? errors.status.message :
+    ""
+  );
+}
+
 
   const form={
     fontSize:"14px",
@@ -74,14 +112,14 @@ export default function Form({budget, insertDataMutation, updateDataMutation, us
   const formRow={
     width: windowSize.windowWidth >= 768 ? "50%" : "100%",
     height:"60px",
-    padding:"10px 0px",
+    padding:"40px 0px",
     borderBottom:"1px solid rgba(79, 8, 161, 0.16)",
     display:"flex",
     gap:"10px",
     alignItems:"center",
   }
 
-  console.log("budget "+budget)
+  console.log("ovulation "+ovulation)
   
   // Basic Validations
   const validateRequired = (val) => !val || val.trim() === "" ? "This field is required" : true;
@@ -97,7 +135,7 @@ export default function Form({budget, insertDataMutation, updateDataMutation, us
     >
       <FormContainer.SubmitRow submitRow={submitRow}>
         <FormContainer.Icon iconStyle={{ fontSize: "30px", color: "crimson" }}>
-          <GiCycle />
+          <HiXCircle/>
         </FormContainer.Icon>
       </FormContainer.SubmitRow>
 
@@ -108,41 +146,51 @@ export default function Form({budget, insertDataMutation, updateDataMutation, us
       {/* Name */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Name</FormContainer.Label>
-        <FormContainer.Text inputStyle={inputStyle} fieldName="name" validation={validateRequired} />
+        <FormContainer.Text inputStyle={inputStyle} fieldName="name" 
+          validation={validateRequired} text={name}/>
       </FormContainer.Row>
 
       {/* Age */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Age</FormContainer.Label>
-        <FormContainer.Number inputStyle={inputStyle} fieldName="age" validation={validateNumber} />
+        <FormContainer.Number inputStyle={inputStyle} fieldName="age"
+          validation={validateNumber} number={age}/>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Last Period Date */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Last Period</FormContainer.Label>
-        <FormContainer.Date inputStyle={inputStyle} fieldName="last_period_date" validation={validateRequired} />
+        <FormContainer.Date inputStyle={inputStyle} fieldName="last_period_date"
+          validation={validateRequired} date={last_period_date}/>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Cycle Length */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Cycle Length</FormContainer.Label>
-        <FormContainer.Number inputStyle={inputStyle} fieldName="cycle_length_days" validation={validateCycle} />
+        <FormContainer.Number inputStyle={inputStyle} fieldName="cycle_length_days"
+          validation={validateCycle} number={cycle_length_days}/>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Period Duration */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Period Duration</FormContainer.Label>
-        <FormContainer.Number inputStyle={inputStyle} fieldName="period_duration_days" validation={validateNumber} />
+        <FormContainer.Number inputStyle={inputStyle} fieldName="period_duration_days" 
+          validation={validateNumber} number={period_duration_days}/>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Regular Cycle */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Cycle Regular?</FormContainer.Label>
-        <FormContainer.Select inputStyle={inputStyle} fieldName="is_cycle_regular">
+        <FormContainer.Select inputStyle={inputStyle} fieldName="is_cycle_regular" >
           <FormContainer.Option optionValue="">Select</FormContainer.Option>
           <FormContainer.Option optionValue="true">Yes</FormContainer.Option>
           <FormContainer.Option optionValue="false">No</FormContainer.Option>
         </FormContainer.Select>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Stress Level */}
@@ -154,30 +202,41 @@ export default function Form({budget, insertDataMutation, updateDataMutation, us
           <FormContainer.Option optionValue="medium">Medium</FormContainer.Option>
           <FormContainer.Option optionValue="high">High</FormContainer.Option>
         </FormContainer.Select>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Sleep Hours */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Sleep Hours</FormContainer.Label>
-        <FormContainer.Number inputStyle={inputStyle} fieldName="sleep_hours" validation={validateNumber} />
+        <FormContainer.Number inputStyle={inputStyle} fieldName="sleep_hours" 
+          validation={validateNumber} number={sleep_hours}/>
       </FormContainer.Row>
 
       {/* Exercise Frequency */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Exercise Days/Week</FormContainer.Label>
-        <FormContainer.Number inputStyle={inputStyle} fieldName="exercise_frequency_per_week" validation={validateNumber} />
+        <FormContainer.Number inputStyle={inputStyle} fieldName="day_week_exercise" 
+          validation={validateNumber} number={day_week_exercise} />
       </FormContainer.Row>
 
       {/* Diagnosed Conditions */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Conditions</FormContainer.Label>
-        <FormContainer.TextArea fieldName="diagnosed_conditions" textAreaStyle={{
-          width: "100%",
-          height: "60px",
-          padding: "5px",
-          border: "1px solid rgba(79, 8, 161, 0.16)"
-        }} />
+        <FormContainer.TextArea fieldName="diagnosed_conditions" textAreaStyle={textArea} 
+          textArea={diagnosed_conditions}/>
       </FormContainer.Row>
+
+      {/* status */}
+      <FormContainer.Row formRow={{...formRow,width:"100%"}}>
+        <FormContainer.Label labelStyle={labelStyle}>Status</FormContainer.Label>
+        <FormContainer.Select inputStyle={inputStyle} fieldName="status" >
+          <FormContainer.Option optionValue="">Select</FormContainer.Option>
+          <FormContainer.Option optionValue="confirmed">confirmed</FormContainer.Option>
+          <FormContainer.Option optionValue="unConfirmed">un-confirmed</FormContainer.Option>
+        </FormContainer.Select>
+        <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
+      </FormContainer.Row>
+
 
       {/* Submit Buttons */}
       <FormContainer.SubmitRow submitRow={submitRow}>
@@ -206,11 +265,16 @@ const inputStyle={
   //boxShadow:"1px 1px 5px rgba(79, 8, 161, 0.76)"
 }
 const textArea={
-  width:"100%",
-  height:"80px",
+  width:"90%",
+  height:"60px",
   maxWidth:"250px",
   border:"1px solid rgba(79, 8, 161, 0.16)",
   padding:"5px",
+}
+const redAsteris={
+  color:"red",
+  fontSize:"11px",
+
 }
 const submitRow={
   display: "flex",
@@ -255,7 +319,7 @@ const fileStyleSpan = {
 const validatename = (values)=>{
   // Check if the value is empty or contains only spaces
   if (!values || values.trim() === "") {
-    return "budget name is required";
+    return "ovulation name is required";
   }
 
   // Regular expression to check for consecutive spaces
@@ -263,7 +327,7 @@ const validatename = (values)=>{
 
   // Check if the value contains consecutive spaces
   if (consecutiveSpacesRegex.test(values)) {
-    return "budget name cannot contain consecutive spaces";
+    return "ovulation name cannot contain consecutive spaces";
   }
 
   // Regular expression to allow only letters, numbers, spaces, and underscores
@@ -271,12 +335,12 @@ const validatename = (values)=>{
 
   // Check if the value matches the allowed pattern
   if (!nameRegex.test(values)) {
-    return "budget name can only contain letters, numbers, spaces, and underscores";
+    return "ovulation name can only contain letters, numbers, spaces, and underscores";
   }
 
   //check length
   if(values.length > 15){
-    return "budget name must not exceed 15 characters"
+    return "ovulation name must not exceed 15 characters"
   }
   return true; // Return true if validation passes
 }
@@ -299,7 +363,7 @@ const validateDesc = (values)=>{
   }
     //check length
     if(values.length > 50){
-      return "budget desc must not exceed 15 characters"
+      return "ovulation desc must not exceed 15 characters"
     }
   return true; // Return true if validation passes
 }
@@ -307,7 +371,7 @@ const validateDesc = (values)=>{
 function validateAmount(values){
    // Check if the value is empty or contains only spaces
    if (!values || values.trim() === "") {
-    return "budget amount is required";
+    return "ovulation amount is required";
   }
 
   // Regular expression to check for consecutive spaces
@@ -315,7 +379,7 @@ function validateAmount(values){
 
   // Check if the value contains consecutive spaces
   if (consecutiveSpacesRegex.test(values)) {
-    return "budget amount cannot contain consecutive spaces";
+    return "ovulation amount cannot contain consecutive spaces";
   }
 
   return true; // Return true if validation passes 
@@ -329,10 +393,10 @@ function validatedate(values){
 
 }
 
-function validateBudget(values){
+function validateovulation(values){
   // Check if the value is empty or contains only spaces
   if (!values || values.trim() === "") {
-   return "budget name is required";
+   return "ovulation name is required";
  }
 
 }
