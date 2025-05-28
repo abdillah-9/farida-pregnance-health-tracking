@@ -101,7 +101,11 @@ export default function Table({user, ovulation, pageRows,pageNumber}) {
                     }
                   </TD>
                   <TD styleTD={tCell}>{ovulationRow.stress_level}</TD>
-                  <TD styleTD={tCell}>{ovulationRow.sleep_hours}</TD>
+                  <TD styleTD={tCell}>
+                    {
+                      ovulationRow.sleep_hours === 0 ? "--": ovulationRow.sleep_hours
+                    }
+                  </TD>
                   {/* <TD styleTD={tCell}>{ovulationRow.day_week_exercise}</TD> */}
                   <TD styleTD={tCell}>
                     <div style={ovulationRow.status == "confirmed" ?

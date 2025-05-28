@@ -72,14 +72,14 @@ useEffect(() => {
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle}>
         <NavBarTemp.NavIcon navIconStyle={navIconStyle}><RiHeartPulseLine/></NavBarTemp.NavIcon>
           <NavBarTemp.NavText navTextStyle={navTextStyle}>
-            <Link href="/expense" onClick={linkClickEvent}>Pregnance Monitor</Link>
+            <Link href="/pregnance" onClick={linkClickEvent}>Pregnance Monitor</Link>
           </NavBarTemp.NavText>        
       </NavBarTemp.NavContainer>
 
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle}>
         <NavBarTemp.NavIcon navIconStyle={navIconStyle}><FaBaby/></NavBarTemp.NavIcon>
           <NavBarTemp.NavText navTextStyle={navTextStyle}>
-            <Link href="/dashboard" onClick={linkClickEvent}>Childcare</Link>
+            <Link href="/childcare" onClick={linkClickEvent}>Childcare</Link>
           </NavBarTemp.NavText>        
       </NavBarTemp.NavContainer>
 

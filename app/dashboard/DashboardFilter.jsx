@@ -11,16 +11,22 @@ export default function DashboardFilter(
 
     return (
         <div style={styleFilterContainer}>
-            <div style={statsDuration == "All"? 
-            {...optionStyle,backgroundColor:"rgba(13, 174, 248, 0.97)",color:"white"} 
-            : optionStyle} onClick={(e)=>handleState(e="All")}>
-                All    
+            <div style={statsDuration == "current year"? 
+            {...optionStyle,  backgroundColor:"rgba(8, 161, 28, 0.76)", color:"white"} 
+            : optionStyle} onClick={(e)=>handleState(e="current year")}>
+                Current year    
             </div>
 
             <div style={statsDuration == "Current month"? 
-            {...optionStyle,backgroundColor:"rgba(13, 174, 248, 0.97)",color:"white"} 
+            {...optionStyle,  backgroundColor:"rgba(8, 161, 28, 0.76)", color:"white"} 
             : optionStyle} onClick={()=>handleState("Current month")}>
                 Current month    
+            </div>
+
+            <div style={statsDuration == "Current week"? 
+            {...optionStyle,  backgroundColor:"rgba(8, 161, 28, 0.76)", color:"white"} 
+            : optionStyle} onClick={()=>handleState("Current week")}>
+                Current week    
             </div>
         </div>
     )
@@ -34,7 +40,7 @@ const styleFilterContainer ={
 }
 const optionStyle ={
     display:"flex",
-    padding:"7px 10px",
+    padding:"10px",
     textAlign:"center",
     fontSize:"14px",
     cursor:"pointer",

@@ -143,18 +143,15 @@ function onError(errors) {
       <FormContainer.Text text={id} inputStyle={{ display: "none" }} fieldName="id" />
       <FormContainer.Text text={userID} inputStyle={{ display: "none" }} fieldName="userID" />
 
-      {/* Name */}
-      <FormContainer.Row formRow={formRow}>
-        <FormContainer.Label labelStyle={labelStyle}>Name</FormContainer.Label>
-        <FormContainer.Text inputStyle={inputStyle} fieldName="name" 
-          validation={validateRequired} text={name}/>
-      </FormContainer.Row>
+      {/* Hidden User-Name Field */}
+      <FormContainer.Text inputStyle={{ display: "none" }} fieldName="name" 
+        text={user.user_metadata.fullName}/>
 
       {/* Age */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Age</FormContainer.Label>
         <FormContainer.Number inputStyle={inputStyle} fieldName="age"
-          validation={validateNumber} number={age}/>
+          validation={validateAge} number={age}/>
         <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
@@ -178,14 +175,14 @@ function onError(errors) {
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Period Duration</FormContainer.Label>
         <FormContainer.Number inputStyle={inputStyle} fieldName="period_duration_days" 
-          validation={validateNumber} number={period_duration_days}/>
+          validation={validatePeriodDuration} number={period_duration_days}/>
         <Icon iconStyle={redAsteris}><PiAsteriskDuotone/></Icon>
       </FormContainer.Row>
 
       {/* Regular Cycle */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Cycle Regular?</FormContainer.Label>
-        <FormContainer.Select inputStyle={inputStyle} fieldName="is_cycle_regular" >
+        <FormContainer.Select inputStyle={inputStyle} fieldName="is_cycle_regular" validation={validateRequired}>
           <FormContainer.Option optionValue="">Select</FormContainer.Option>
           <FormContainer.Option optionValue="true">Yes</FormContainer.Option>
           <FormContainer.Option optionValue="false">No</FormContainer.Option>
@@ -196,7 +193,7 @@ function onError(errors) {
       {/* Stress Level */}
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Stress Level</FormContainer.Label>
-        <FormContainer.Select inputStyle={inputStyle} fieldName="stress_level">
+        <FormContainer.Select inputStyle={inputStyle} fieldName="stress_level" validation={validateRequired}>
           <FormContainer.Option optionValue="">Select</FormContainer.Option>
           <FormContainer.Option optionValue="low">Low</FormContainer.Option>
           <FormContainer.Option optionValue="medium">Medium</FormContainer.Option>
@@ -223,13 +220,13 @@ function onError(errors) {
       <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Conditions</FormContainer.Label>
         <FormContainer.TextArea fieldName="diagnosed_conditions" textAreaStyle={textArea} 
-          textArea={diagnosed_conditions}/>
+          textArea={diagnosed_conditions} validation={validateDesc}/>
       </FormContainer.Row>
 
       {/* status */}
-      <FormContainer.Row formRow={{...formRow,width:"100%"}}>
+      <FormContainer.Row formRow={formRow}>
         <FormContainer.Label labelStyle={labelStyle}>Status</FormContainer.Label>
-        <FormContainer.Select inputStyle={inputStyle} fieldName="status" >
+        <FormContainer.Select inputStyle={inputStyle} fieldName="status" validation={validateRequired}>
           <FormContainer.Option optionValue="">Select</FormContainer.Option>
           <FormContainer.Option optionValue="confirmed">confirmed</FormContainer.Option>
           <FormContainer.Option optionValue="unConfirmed">un-confirmed</FormContainer.Option>
@@ -267,7 +264,7 @@ const inputStyle={
 const textArea={
   width:"90%",
   height:"60px",
-  maxWidth:"250px",
+  maxWidth:"195px",
   border:"1px solid rgba(79, 8, 161, 0.16)",
   padding:"5px",
 }
@@ -316,7 +313,7 @@ const fileStyleSpan = {
 }
 
 //Validation methods
-const validatename = (values)=>{
+const validateName = (values)=>{
   // Check if the value is empty or contains only spaces
   if (!values || values.trim() === "") {
     return "ovulation name is required";
@@ -368,10 +365,10 @@ const validateDesc = (values)=>{
   return true; // Return true if validation passes
 }
 
-function validateAmount(values){
+function validateAge(values){
    // Check if the value is empty or contains only spaces
    if (!values || values.trim() === "") {
-    return "ovulation amount is required";
+    return "ovulation age is required";
   }
 
   // Regular expression to check for consecutive spaces
@@ -379,7 +376,27 @@ function validateAmount(values){
 
   // Check if the value contains consecutive spaces
   if (consecutiveSpacesRegex.test(values)) {
-    return "ovulation amount cannot contain consecutive spaces";
+    return "ovulation age cannot contain consecutive spaces";
+  }
+
+  if(values < 10){
+    return "Age should be atleast 10 yrs"
+  }
+
+  return true; // Return true if validation passes 
+}
+
+function validatePeriodDuration(values){
+   // Check if the value is empty or contains only spaces
+   if (!values || values.trim() === "") {
+    return "period duration is required";
+  }
+
+  // Regular expression to check for consecutive spaces
+  const consecutiveSpacesRegex = /\s{2,}/;
+
+  if(values < 3 || values > 5){
+    return "it should range from 3 to 5 days"
   }
 
   return true; // Return true if validation passes 
@@ -398,9 +415,5 @@ function validateovulation(values){
   if (!values || values.trim() === "") {
    return "ovulation name is required";
  }
-
-}
-
-function validateFile(){
 
 }
