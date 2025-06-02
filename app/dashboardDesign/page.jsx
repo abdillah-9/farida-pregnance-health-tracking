@@ -138,7 +138,7 @@ export default function page() {
 
 
   return (
-    <div style={{display:"flex", flexDirection:"column", gap:"30px"}}>
+    <div>
       {/* DASHBOARD HEADING */}
       <div style={header}>
         <div style={heading}>Dashboard</div>

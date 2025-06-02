@@ -93,7 +93,7 @@ useEffect(() => {
       <NavBarTemp.NavContainer navContainerStyle={navContainerStyle}>
         <NavBarTemp.NavIcon navIconStyle={navIconStyle}><BsRobot/></NavBarTemp.NavIcon>
           <NavBarTemp.NavText navTextStyle={navTextStyle}>
-            <Link href="/dashboard" onClick={linkClickEvent}>AI Assistant</Link>
+            <Link href="/dashboardDesign" onClick={linkClickEvent}>AI Assistant</Link>
           </NavBarTemp.NavText>        
       </NavBarTemp.NavContainer>
 
