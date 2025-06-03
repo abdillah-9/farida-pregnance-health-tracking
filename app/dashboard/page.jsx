@@ -35,8 +35,11 @@ export default function page() {
         if(!user || !ovulation || !Pregnance || !Childcare ){
           return 
         }
+        else{
+          setStatsValues(yearlyData)
+        }
       }
-    ,[user, ovulation, Pregnance, Childcare])
+    ,[user, ovulation, Pregnance, Childcare, statsValues])
     
     if( ovulationLoading || PregnanceLoading || ChildcareLoading || !user ){
       return <LoadingSpinner/>
