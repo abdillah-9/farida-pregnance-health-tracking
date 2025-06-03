@@ -139,6 +139,7 @@ export default function PregnancyDashboard({data}) {
       return <OvulationDashboard data={data}/>
   }
 
+  console.log("created_at issue "+data.slice(-1)[0].created_at)
   // Generate tip based on latest symptom or fallback
   //const tip = getTipBasedOnSymptom(latestEntry?.symptom);
 
