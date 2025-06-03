@@ -38,7 +38,7 @@ export default function DashboardBody({statsValues}) {
      console.log("latestData "+JSON.stringify(latestData));
  
      return (
-         <div style={{height:"67vh", overflow:"auto",  boxShadow: '1px 2px 10px rgba(50,50,50,1)',}}>
+         <div style={{height:"75vh", overflow:"auto",  boxShadow: '1px 2px 10px rgba(50,50,50,1)',}}>
             {
              latestData.category === "ovulation" &&
              <OvulationDashboard key={"ovulation"} data={data.ovulation}/>

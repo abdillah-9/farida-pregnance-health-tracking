@@ -90,7 +90,7 @@ export default function OvulationDashboard({data}) {
       return <PregnancyDashboard data={data}/>
     }
     if(data.length == 0){
-        return <LoadingSpinner/>
+        return <div>Currently there's no data</div>
     }
 
     console.log("data in ovulation jsx "+JSON.stringify(data))
