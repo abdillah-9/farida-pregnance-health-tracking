@@ -157,7 +157,9 @@ export default function page() {
       {/* DASHBOARD BODY */}
       <div>
         {
-          <DashboardBody statsValues={statsValues}/> 
+          statsValues?
+          <DashboardBody statsValues={statsValues}/> :
+          ""
         }
       </div>
 

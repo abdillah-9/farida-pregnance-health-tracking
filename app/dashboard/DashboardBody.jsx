@@ -2,8 +2,12 @@ import React from 'react'
 import ChildcareDashboard from "./categories/ChildcareDashboard.jsx";
 import OvulationDashboard from "./categories/OvulationDashboard";
 import PregnancyDashboard from "./categories/PregnancyDashboard";
+import LoadingSpinner from '@app/reusables/UI_components/LoadingSpinner.jsx';
 
 export default function DashboardBody({statsValues}) {
+    if(!statsValues || statsValues.length === 0){
+        return <LoadingSpinner/>
+    }
  const data =
          statsValues?.ovulationYearly ? {
              "ovulation": statsValues.ovulationYearly,

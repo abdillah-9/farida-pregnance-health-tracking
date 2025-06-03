@@ -129,10 +129,10 @@ function getTipBasedOnSymptom(symptom) {
 
 export default function PregnancyDashboard({data}) {
   console.log(data)
-    if(data[0]?.gender){
+    if(data[0].gender){
       return <ChildcareDashboard data={data}/>
   }
-    if(data[0]?.sleep_hours){
+    if(data[0].sleep_hours){
       return <OvulationDashboard data={data}/>
   }
   if(!data || data.length === 0){
