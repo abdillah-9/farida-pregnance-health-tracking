@@ -32,11 +32,11 @@ export default function page() {
 
     useEffect(
       ()=>{
-        if(!user || !ovulation || !Pregnance || !Childcare ){
+        if(!user || !ovulation || !Pregnance || !Childcare || statsValues.length === 0 ){
           return 
         }
       }
-    ,[user, ovulation, Pregnance, Childcare])
+    ,[user, ovulation, Pregnance, Childcare, statsValues])
 
     if( ovulationLoading || PregnanceLoading || ChildcareLoading || !user){
       return <LoadingSpinner/>
