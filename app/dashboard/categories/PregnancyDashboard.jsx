@@ -135,7 +135,7 @@ export default function PregnancyDashboard({data}) {
     if(data[0]?.sleep_hours){
       return <OvulationDashboard data={data}/>
   }
-  if(data.length == 0){
+  if(!data || data.length === 0){
     return <LoadingSpinner/>
   }
 
