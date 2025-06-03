@@ -30,7 +30,6 @@ export default function page() {
     const [statsDuration, setStatsDuration] = useState("current year");
     const [statsValues, setStatsValues] = useState([]);
 
-    // DISPLAY LOADING SPINNER DURING DATA FETCHING
     useEffect(
       ()=>{
         if(!user || !ovulation || !Pregnance || !Childcare ){
@@ -39,7 +38,7 @@ export default function page() {
       }
     ,[user, ovulation, Pregnance, Childcare])
 
-    if( ovulationLoading || PregnanceLoading || ChildcareLoading ){
+    if( ovulationLoading || PregnanceLoading || ChildcareLoading || !user){
       return <LoadingSpinner/>
     }
 
@@ -74,6 +73,10 @@ export default function page() {
      
 
     /* Filter based on current week */ 
+    console.log(ovulation)
+    console.log(Pregnance)
+    console.log(Childcare)
+    console.log(user)
     //OVULATION
     const ovulationWeekly = ovulation.filter((row)=>row.userID == user.id)
     .filter((row)=>
@@ -134,8 +137,6 @@ export default function page() {
     console.log("ovulation Yearly "+JSON.stringify(ovulationYearly))
     console.log("preg Yearly "+JSON.stringify(pregnanceYearly))
     console.log("Childcare Yearly "+JSON.stringify(childcareYearly))
-    console.log("row.created_at.slice(0,3) "+ovulation[0].created_at.slice(5,7))
-
 
   return (
     <div style={{display:"flex", flexDirection:"column", gap:"30px"}}>
@@ -155,7 +156,9 @@ export default function page() {
 
       {/* DASHBOARD BODY */}
       <div>
-        <DashboardBody statsValues={statsValues}/>
+        {
+          <DashboardBody statsValues={statsValues}/> 
+        }
       </div>
 
     </div>
@@ -171,4 +174,9 @@ const header={
 const heading={
   fontSize:"20px",
   fontWeight:500,
+}
+const iconStyle={
+  padding:"0px 5px",
+  fontSize:"35px",
+  color:"rgba(8, 161, 28, 0.76)",
 }

@@ -24,7 +24,7 @@ const data = [
 ];
 
 
-export default function LineGraph() {
+export default function LineGraph({data}) {
   return (
             <ResponsiveContainer width="100%" height={400}>
             <AreaChart data={data} margin={{ top: 20, right: 0, left: 0, bottom: 5 }}>

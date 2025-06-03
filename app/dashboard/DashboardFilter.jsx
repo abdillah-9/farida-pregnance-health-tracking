@@ -15,7 +15,7 @@ export default function DashboardFilter({
         if(statsValues?.length == 0 || !statsValues){
             setStatsValues(yearlyData)
         }
-    },[])  
+    },[statsValues])  
 
     function handleState(e){
         setStatsDuration(e.duration);

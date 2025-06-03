@@ -1,53 +1,58 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import ChildGrowthPieChart from '../graphs/piechartGraph';
 import PregnancyBarChart from '../graphs/barGraph';
+import Icon from '@app/reusables/UI_components/Icon';
+import { MdOutlineSick } from '@node_modules/react-icons/md';
+import { BsCalendar2Heart, BsCalendarCheck } from '@node_modules/react-icons/bs';
+import { RiTimerLine } from '@node_modules/react-icons/ri';
+import LoadingSpinner from '@app/reusables/UI_components/LoadingSpinner';
+import ChildcareDashboard from './ChildcareDashboard.jsx';
+import OvulationDashboard from './OvulationDashboard';
 
 const container = {
-  padding: '1rem',
+  padding: '0px 1rem',
   fontFamily: 'Arial, sans-serif'
 };
 
 const title = {
   fontSize: '17px',
-  fontWeight: 500,
-  padding:"40px 0px 25px 0px",
+  fontWeight: "bold",
+  padding:"20px 0px 25px 0px",
   color:"rgba(61, 61, 61, 0.8)",
   textTransform:"uppercase",
-};
-
-const statsGrid = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '1rem',
-  marginBottom: '1.5rem'
 };
 
 const grid = {
   display: 'flex',
   flexWrap:"wrap",
+  justifyContent:"space-between",
   gap: '20px',
-  padding:"10px 15px",
+  padding:"20px",
   borderLeft:"2px solid rgba(73, 72, 72, 0.64)",
 };
 
 const card = {
   fontSize:"14px",
   display:"flex",
-  flexDirection:"column",
-  gap:"5px",
-  width:"180px",
-  padding: '10px',
+  gap:"15px",
+  minWidth:"220px",
+  padding: '15px',
   borderRadius: '5px',
   boxShadow: '3px 1px 15px rgba(0, 0, 0, 0.93)',
 };
+const miniCard ={
+  display:"flex",
+  flexDirection:"column",
+}
 
 const listItem = {
-  padding: '0.75rem',
-  backgroundColor: '#fff',
-  border: '1px solid #ddd',
+  padding: '10px',
+  fontSize:"14px",
+  fontWeight:"light",
+  textAlign:"center",
+  width:"100%",
+  backgroundColor:"rgba(8, 161, 28, 0.76)",
+  color:"white",
   borderRadius: '0.375rem',
-  boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
 };
 
 const subtitle = {
@@ -57,12 +62,6 @@ const subtitle = {
   marginTop: '1rem'
 };
 
-// const listItem = {
-//   padding: '0.75rem',
-//   border: '1px solid #ccc',
-//   borderRadius: '0.375rem',
-//   boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-// };
 const miniTitle={
   fontSize:"15px",
   display:"flex",
@@ -93,17 +92,26 @@ const ctaButton = {
 
 const chartContainer = {
   width: '100%',
-  height: 200,
+  height: "400px",
   marginBottom: '1rem'
 };
+const ul_cards={
+  borderRadius: '0.375rem',
+  boxShadow: '1px 2px 10px rgba(50,50,50,1)',
+  padding:"12px",  
+  fontSize:"14px",
+}
 
-function getMostFrequentSymptom(data) {
-  const freq = {};
-  data.forEach(({ symptom }) => {
-    freq[symptom] = (freq[symptom] || 0) + 1;
-  });
-  const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
-  return sorted.length ? sorted[0][0] : null;
+const iconStyle={
+  fontSize:"25px",
+  color:"rgba(8, 161, 28, 0.76)",
+  boxShadow: '1px 2px 7px rgba(2, 88, 13, 0.96)',
+  height:"60px",
+  borderRadius:"50%",
+  width:"60px",
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center",
 }
 
 function getTipBasedOnSymptom(symptom) {
@@ -120,68 +128,131 @@ function getTipBasedOnSymptom(symptom) {
 }
 
 export default function PregnancyDashboard({data}) {
-  const datas = [
-    { week: 'Week 16', symptom: 'Nausea', created_at: '2025-03-10' },
-    { week: 'Week 17', symptom: 'Fatigue', created_at: '2025-03-17' },
-    { week: 'Week 18', symptom: 'Back Pain', created_at: '2025-03-24' }
-  ];
-
-  const chartData = [
-    { week: 16, weight: 60 },
-    { week: 17, weight: 61 },
-    { week: 18, weight: 62 }
-  ];
-
-  // Find most frequent symptom
-  const mostFrequentSymptom = getMostFrequentSymptom(data);
-
-  // Get latest symptom entry
-  const latestEntry = data[data.length - 1];
+  console.log(data)
+    if(data[0]?.gender){
+      return <ChildcareDashboard data={data}/>
+  }
+    if(data[0]?.sleep_hours){
+      return <OvulationDashboard data={data}/>
+  }
+  if(data.length == 0){
+    return <LoadingSpinner/>
+  }
 
   // Generate tip based on latest symptom or fallback
-  const tip = getTipBasedOnSymptom(latestEntry?.symptom);
+  //const tip = getTipBasedOnSymptom(latestEntry?.symptom);
+
+  //Get current week, weeks passed , due_date, symptoms , latest symptom, all symptoms
+  let prev_entry = {"prev_date":data.slice(-1)[0].created_at}
+  let created_date = new Date(prev_entry.prev_date)
+  let current_date = new Date();
+  let date_difference = current_date - new Date(prev_entry.prev_date)
+  let weeks_passed = Math.floor(date_difference/(1000*60*60*24*7));
+  let due_date = new Date(created_date.getTime() + 40*(1000*60*60*24*7))
+  due_date = due_date.toLocaleDateString("en-Us",{
+    year:"numeric",
+    month:"short",
+    day:"numeric"
+  })
+  let trimester = weeks_passed+1 <= 12 ? "first trimester" : 13 <= weeks_passed+1 <= 26 ? "second trimester" :
+                  weeks_passed+1 >= 27 ? "third trimester" :""
+  let symptoms_freq = data.filter((row)=>row.symptoms != "").length
+  let latest_symptom = data.filter((row)=>row.symptoms).slice(-1)
 
   return (
     <div style={container}>
-      <h2 style={title}>Currently tracking: Pregnancy – Week 18</h2>
+      <div style={title}>Currently tracking: Pregnancy - Week {weeks_passed+1}</div>
 
       <div style={grid}>
         <div style={card}>
-          <strong>Current Week:</strong></div>
+          <Icon iconStyle={iconStyle}><BsCalendar2Heart/></Icon>
+          <div style={miniCard}>
+            <strong>Current Week:</strong> <span>{"week "} {weeks_passed+1}</span>
+          </div>
+        </div>
         <div style={card}>
-          <strong>Due Date:</strong> <span>Aug 5, 2025</span></div>
+          <Icon iconStyle={iconStyle}><BsCalendarCheck/></Icon>
+          <div style={miniCard}>
+            <strong>Due Date:</strong> <span>{due_date}</span>
+          </div>
+        </div>
         <div style={card}>
-          <strong>Trimester:</strong><span>2nd</span></div>
+          <Icon iconStyle={iconStyle}><RiTimerLine/></Icon>
+          <div style={miniCard}>
+            <strong>Trimester:</strong><span>{trimester}</span>
+          </div>
+        </div>
         <div style={card}>
-          <strong>Logged Symptoms:</strong><span>{data.length} entries</span></div>
+          <Icon iconStyle={iconStyle}><MdOutlineSick /></Icon>
+          <div style={miniCard}>
+            <strong>Logged Symptoms:</strong><span>{symptoms_freq} entries</span>
+          </div>
+        </div>
       </div>
 
       <div style={title}>Recent Activity</div>
+      <div style={{display:"flex", flexWrap:"wrap", gap:"20px", justifyContent:"space-between"}} >
+        <div style={{width:"45%", minWidth:"200px", boxShadow:"1px 2px 10px rgba(50,50,50,1)", 
+            display:"flex",flexDirection:"column",alignItems:"center", gap:"0px", padding:"15px 0px",
+              backgroundColor:"rgba(8, 161, 28, 0.76)",}}>
+          <strong style={{color:"rgb(1, 41, 7)"}}>Latest symptom</strong>
+          <ul style={{display: 'flex', flexDirection: 'column', gap: '20px',padding:"15px",width:"100%"}}>
+              <div style={ul_cards}>
+                <strong>{"Date: "}</strong> 
+                {
+                  new Date(latest_symptom[0].created_at).toLocaleDateString("en-Us",{
+                          year:"numeric", hour:"numeric",
+                          month:"short", minute:"numeric",
+                          day:"numeric", second:"numeric"
+                  })
+                }
+              </div>
+              <div style={ul_cards}>
+                <strong>{"Symptom: "}</strong>
+                {
+                  latest_symptom[0].symptoms
+                }
+              </div>
+              <div style={ul_cards}>
+                <strong>{"Pregnance week: "}</strong>
+                {
+                  latest_symptom[0].pregnance_week
+                }
+              </div>
+              <div style={ul_cards}>
+                <strong>{"Number of featus: "}</strong>
+                {
+                  latest_symptom[0].featus_number
+                }
+              </div>
+          </ul>
+        </div>
 
-      <div style={miniTitle}>
-        <strong>Most frequent symptom:</strong> {mostFrequentSymptom || 'No data'}
+        <div style={{width:"45%", minWidth:"200px", boxShadow:"1px 2px 10px rgba(50,50,50,1)", 
+            display:"flex",flexDirection:"column",alignItems:"center", gap:"15px", padding:"15px 0px"}}>
+          <strong style={{color: "rgba(2, 68, 11, 0.76)"}}>Latest entries</strong> 
+          <ul style={{display: 'flex', flexDirection: 'column', gap: '20px',paddingBottom:"15px",width:"90%"}}>
+            {data.slice(-4).map((entry, index) => (
+              <li key={index} style={listItem}>
+                {new Date(entry.created_at).toLocaleDateString("en-Us",{
+                      year:"numeric", hour:"numeric",
+                      month:"short", minute:"numeric",
+                      day:"numeric", second:"numeric"
+                })} - {entry.symptoms || "none"}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div style={miniTitle}>
-        <strong>Latest symptom:</strong> 
-        <div>{latestEntry ? `${latestEntry.created_at} – ${latestEntry.symptom}` : 'No recent activity'}</div>
-      </div>
 
-      <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        {data.map((entry, index) => (
-          <li key={index} style={listItem}>
-            {entry.created_at} – {entry.symptom}
-          </li>
-        ))}
-      </ul>
-
-      <h3 style={title}>Weight Gain Over Time</h3>
+      <h3 style={title}>Pregnance progress Over Time</h3>
       <div style={chartContainer}>
-        <PregnancyBarChart data={data}/>
+        <PregnancyBarChart data={data.slice(-5)}/>
       </div>
 
       <h3 style={subtitle}>Tips & Suggestions</h3>
       <div style={tipBox}>
-        🤰 <strong>Tip:</strong> {tip}
+        🤰 <strong>Tip:</strong> {""}
       </div>
 
       {/* <button style={ctaButton}>+ Add Entry</button> */}

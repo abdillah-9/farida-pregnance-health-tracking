@@ -23,8 +23,8 @@ export default function DashboardBody({statsValues}) {
      // Helper to get the latest created_at from an array
      const getLatestDate = (arr) => {
          return arr.reduce((latest, item) => {
-             const current = new Date(item.created_at);
-             return current > latest ? current : latest;
+            const current = new Date(item.created_at);
+            return current > latest ? current : latest;
          }, new Date(0)); // epotch time ie 1970
      };
  
@@ -35,31 +35,21 @@ export default function DashboardBody({statsValues}) {
      const dates = [latestOvulationDate, latestPregnanceDate, latestChildcareDate];
      // Find the latest by sorting descending and picking the first
      const latestData = dates.sort((a, b) => b.date - a.date)[0];
+     console.log("latestData "+JSON.stringify(latestData));
  
      return (
-         <div style={{height:"67vh", overflow:"auto"}}>
-             {/* {
-             latestData.category == "ovulation" &&
-             <OvulationDashboard data={data.ovulation}/>
-                 ||
-             latestData.category == "pregnance" &&
-             <PregnancyDashboard data={data.pregnance} />
-                 ||
-             latestData.category == "childcare" &&
-             <ChildcareDashboard data={data.childcare} />
-             } */}
-
+         <div style={{height:"67vh", overflow:"auto",  boxShadow: '1px 2px 10px rgba(50,50,50,1)',}}>
             {
-             latestData.category == "childcare" &&
-             <OvulationDashboard data={data.ovulation}/>
+             latestData.category === "ovulation" &&
+             <OvulationDashboard key={"ovulation"} data={data.ovulation}/>
             }
             {
-             latestData.category == "childcare" &&
-             <PregnancyDashboard data={data.pregnance} />
+             latestData.category === "pregnance" &&
+             <PregnancyDashboard key={"pregnance"} data={data.pregnance} />
             }
             {
-             latestData.category == "childcare" &&
-             <ChildcareDashboard data={data.childcare} />
+             latestData.category === "childcare" &&
+             <PregnancyDashboard key={"childcare"} data={data.childcare} />
             }
              
          </div>

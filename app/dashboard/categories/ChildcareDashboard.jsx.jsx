@@ -2,6 +2,13 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import PregnancyBarChart from '../graphs/barGraph';
 import ChildGrowthPieChart from '../graphs/piechartGraph';
+import OvulationDashboard from './OvulationDashboard';
+import { BsCalendar2Heart } from '@node_modules/react-icons/bs';
+import Icon from '@app/reusables/UI_components/Icon';
+import { PiBaby, PiBabyDuotone, PiBabyFill, PiBabyLight } from '@node_modules/react-icons/pi';
+import { GiBabyBottle } from '@node_modules/react-icons/gi';
+import { TbCalendarClock } from '@node_modules/react-icons/tb';
+import { MdTimelapse } from '@node_modules/react-icons/md';
 
 const container = {
   padding: '1rem',
@@ -10,8 +17,8 @@ const container = {
 
 const title = {
   fontSize: '17px',
-  fontWeight: 500,
-  padding:"40px 0px 25px 0px",
+  fontWeight: "bold",
+  padding:"0px 0px 25px 0px",
   color:"rgba(61, 61, 61, 0.8)",
   textTransform:"uppercase",
 };
@@ -25,30 +32,27 @@ const sectionTitle = {
 const grid = {
   display: 'flex',
   flexWrap:"wrap",
-  gap: '20px',
   justifyContent:"space-between",
-  padding:"15px",
-  marginBottom:"30px",
+  gap: '20px',
+  padding:"20px",
   borderLeft:"2px solid rgba(73, 72, 72, 0.64)",
+  margin:"0px 0px 30px 0px",
 };
 
 const card = {
   fontSize:"14px",
   display:"flex",
-  flexDirection:"column",
-  gap:"5px",
-  width:"180px",
-  padding: '10px',
+  gap:"15px",
+  minWidth:"220px",
+  padding: '15px',
   borderRadius: '5px',
   boxShadow: '3px 1px 15px rgba(0, 0, 0, 0.93)',
 };
-
-const statsGrid = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '1rem',
-  marginBottom: '1.5rem'
-};
+const miniCard ={
+  color:"rgb(0, 121, 16)",
+  display:"flex",
+  flexDirection:"column",
+}
 
 const subtitle = {
   fontSize: '15px',
@@ -58,10 +62,14 @@ const subtitle = {
 };
 
 const listItem = {
-  padding: '0.75rem',
-  border: '1px solid #ccc',
+  padding: '10px',
+  fontSize:"14px",
+  fontWeight:"light",
+  textAlign:"center",
+  width:"100%",
+  backgroundColor:"rgba(8, 161, 28, 0.76)",
+  color:"rgba(250, 250, 250, 0.94)",
   borderRadius: '0.375rem',
-  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
 };
 
 const tipBox = {
@@ -86,22 +94,36 @@ const ctaButton = {
 
 const chartContainer = {
   width: '100%',
-  height: 200,
+  minHeight: "220px",
+  display:"flex",
+  flexDirection:"column",
+  gap:"30px",
   marginBottom: '1rem'
 };
 
-export default function ChildcareDashboard({data}) {
-  const s = [
-    { created_at: '2025-04-01', activity: 'Bottle feeding' },
-    { created_at: '2025-04-02', activity: 'Diaper change' },
-    { created_at: '2025-04-03', activity: 'Nap logged' }
-  ];
+const iconStyle={
+  fontSize:"25px",
+  color:"rgba(8, 161, 28, 0.76)",
+  boxShadow: '1px 2px 7px rgba(2, 88, 13, 0.96)',
+  height:"60px",
+  borderRadius:"50%",
+  width:"60px",
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center",
+}
 
-  const chartData = [
-    { day: 'Mon', hours: 12 },
-    { day: 'Tue', hours: 10 },
-    { day: 'Wed', hours: 14 }
-  ];
+export default function ChildcareDashboard({data}) {
+  console.log(data)
+    if(data[0].last_period_date){
+      return <OvulationDashboard data={data}/>
+  }
+    if(data[0].pregnance_week){
+      return <PregnancyDashboard data={data}/>
+  }
+    if(data.length == 0){
+      return <LoadingSpinner/>
+  }
 
   //Calculate current child's age
   let prev_entry = {"prev_age":data.slice(-1)[0].baby_age_month,"prev_date":data.slice(-1)[0].created_at}
@@ -114,23 +136,45 @@ export default function ChildcareDashboard({data}) {
   
   return (
     <div style={container}>
-      <h2 style={title}>Currently tracking: Childcare - Baby is 6 months old</h2>
+      <div style={title}>Currently tracking: Childcare</div>
 
       <div style={grid}>
         <div style={card}>
-          <strong>Baby's Age:</strong><div>{ current_yrs+"yr(s) and "+current_months+" months"}</div>
+          <Icon iconStyle={iconStyle}><TbCalendarClock/></Icon>
+          <div style={miniCard}>
+            <strong>Baby's Age:</strong>
+            <div>{ current_yrs+"yr(s) and "+current_months+" month(s)"}</div>
+          </div>
         </div>
-        <div style={card}><strong>Last Activity:</strong><div>nap logged</div></div>
-        <div style={card}><strong>Recent Milestone:</strong><div>first smile 😊</div></div>
-        <div style={card}><strong>Growth Tracking:</strong><div>Ongoing</div></div>
+        <div style={card}>
+          <Icon iconStyle={iconStyle}><PiBabyDuotone/></Icon>
+          <div style={miniCard}>
+            <strong>Childs' weight:</strong>
+            <div>{data.slice(-1)[0].current_weight + " kg"}</div>
+          </div>
+        </div>
+        <div style={card}>
+          <Icon iconStyle={iconStyle}><GiBabyBottle/></Icon>
+          <div style={miniCard}>
+            <strong>Feeding type:</strong>
+            <div> {data.slice(-1)[0].feeding_type} 😊 </div>
+          </div>
+        </div>
+        <div style={card}>
+          <Icon iconStyle={iconStyle}><MdTimelapse/></Icon>
+          <div style={miniCard}>
+            <strong>Feeding frequency: </strong>
+            <div>{data.slice(-1)[0].feeding_frequency + " times a day"}</div>
+          </div>
+        </div>
       </div>
 
       <div style={{display:"flex", flexWrap:"wrap", gap:"20px", justifyContent:"space-between"}}>
         <div style={{width:"45%", minWidth:"200px", boxShadow:"1px 2px 10px rgba(50,50,50,1)", 
-          display:"flex",flexDirection:"column",alignItems:"center"}}>
-          <div style={{...subtitle}}>Recent Activity</div>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem',paddingBottom:"15px",
-           }}>
+          display:"flex",flexDirection:"column",alignItems:"center", padding:"0px 15px",
+          backgroundColorr:"rgba(8, 161, 28, 0.76)",}}>
+          <div style={{...subtitle, color:"rgb(0, 121, 16)"}}>Recent Activity</div>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem',paddingBottom:"15px"}}>
             {
             data.slice(-4)
             .map((entry, index) => (
@@ -150,9 +194,9 @@ export default function ChildcareDashboard({data}) {
         <div style={{width:"45%", minWidth:"200px",boxShadow:"1px 2px 10px rgba(50,50,50,1)",
            display:"flex",flexDirection:"column",alignItems:"center",padding:"0px 15px"
         }}>
-          <div style={{...subtitle }}>Meal VS current child weight piechart</div>
+          <div style={{...subtitle,color:"rgb(0, 121, 16)", }}>Meal VS current child weight piechart</div>
           <div style={chartContainer}>
-            <ChildGrowthPieChart data={data.slice(-4)}/>
+            <ChildGrowthPieChart data={data.slice(-5)}/>
           </div>
         </div>
       </div>
@@ -161,8 +205,6 @@ export default function ChildcareDashboard({data}) {
       <div style={tipBox}>
         👶 <strong>Tip:</strong> How to introduce solid foods
       </div>
-
-      {/* <button style={ctaButton}>+ Add Entry</button> */}
     </div>
   );
 }

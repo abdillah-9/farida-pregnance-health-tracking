@@ -1,13 +1,16 @@
 import React from 'react';
 import LineGraph from '../graphs/lineGraph';
+import LoadingSpinner from '@app/reusables/UI_components/LoadingSpinner';
+import PregnancyDashboard from './PregnancyDashboard';
 
 const container = {
+    padding:"1rem"
 };
 
 const title = {
   fontSize: '17px',
   fontWeight: 500,
-  padding:"40px 0px 25px 0px",
+  padding:"20px 0px 25px 0px",
   color:"rgba(61, 61, 61, 0.8)",
   textTransform:"uppercase",
 };
@@ -22,6 +25,7 @@ const grid = {
   display: 'flex',
   flexWrap:"wrap",
   gap: '20px',
+  justifyContent:"space-between",
   padding:"10px 15px",
   borderLeft:"2px solid rgba(73, 72, 72, 0.64)",
 };
@@ -78,6 +82,16 @@ const ctaButton = {
 };
 
 export default function OvulationDashboard({data}) {
+    console.log(data)
+    if(data[0]?.gender){
+      return <ChildcareDashboard data={data}/>
+    }
+    if(data[0]?.pregnance_week){
+      return <PregnancyDashboard data={data}/>
+    }
+    if(data.length == 0){
+        return <LoadingSpinner/>
+    }
 
     console.log("data in ovulation jsx "+JSON.stringify(data))
     const latestDataIndex = data.length - 1
@@ -89,25 +103,25 @@ export default function OvulationDashboard({data}) {
       {/* Grid Stats */}
       <div style={grid}>
         <div style={card}>
-            <strong>Name:</strong> <span>{data[data.length-1].name || "- - -"}</span>
+            <strong>Name:</strong> <span>{data.slice(-1)[0]?.name || "- - -"}</span>
         </div>
         <div style={card}>
-            <strong>Age:</strong> <span>{data[latestDataIndex].age || "- - -"}</span>
+            <strong>Age:</strong> <span>{data[latestDataIndex]?.age || "- - -"}</span>
         </div>
         <div style={card}>
             <strong>Last Period:</strong> 
-            <span>{data[latestDataIndex].last_period_date || "- - -"}</span>
+            <span>{data[latestDataIndex]?.last_period_date || "- - -"}</span>
         </div>
         <div style={card}>
             <strong>Cycle Length:</strong> 
-            <span>{data[latestDataIndex].cycle_length_days || "- - -"}</span>
+            <span>{data[latestDataIndex]?.cycle_length_days || "- - -"}</span>
         </div>
         <div style={card}>
-            <strong>Period Duration:</strong> <span>{data[latestDataIndex].cycle_length_days}</span>
+            <strong>Period Duration:</strong> <span>{data[latestDataIndex]?.cycle_length_days}</span>
         </div>
         <div style={card}>
             <strong>Regular Cycle:</strong> <span>{
-            data[latestDataIndex].cycle_length_days ? "YES" : "NO"
+            data[latestDataIndex]?.cycle_length_days ? "YES" : "NO"
             }</span>
         </div>
         <div style={card}>
@@ -129,9 +143,6 @@ export default function OvulationDashboard({data}) {
             <span>{
                 data[latestDataIndex].diagnised_conditions || "- - -"  
             }</span>
-        </div>
-        <div style={card}>
-            <strong>Status:</strong><span>{data[latestDataIndex].status}</span>
         </div>
       </div>
 
