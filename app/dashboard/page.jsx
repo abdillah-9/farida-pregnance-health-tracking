@@ -37,6 +37,10 @@ export default function page() {
         }
       }
     ,[user, ovulation, Pregnance, Childcare])
+    
+    if( ovulationLoading || PregnanceLoading || ChildcareLoading || !user ){
+      return <LoadingSpinner/>
+    }    
 
     // FILTER THOSE DATA BASED ON FILTER COMPONENT (current year, current month, current week)
     const currentYear = new Date().getFullYear();
@@ -134,10 +138,10 @@ export default function page() {
     console.log("preg Yearly "+JSON.stringify(pregnanceYearly))
     console.log("Childcare Yearly "+JSON.stringify(childcareYearly))
 
-    if( ovulationLoading || PregnanceLoading || ChildcareLoading || !user || statsValues.length === 0){
+    if( statsValues.length === 0){
       return <LoadingSpinner/>
     }
-      
+
   return (
     <div style={{display:"flex", flexDirection:"column", gap:"30px"}}>
       {/* DASHBOARD HEADING */}
