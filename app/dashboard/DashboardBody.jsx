@@ -49,7 +49,7 @@ export default function DashboardBody({statsValues}) {
             }
             {
              latestData.category === "childcare" &&
-             <PregnancyDashboard key={"childcare"} data={data.childcare} />
+             <ChildcareDashboard key={"childcare"} data={data.childcare} />
             }
              
          </div>
