@@ -115,14 +115,14 @@ const iconStyle={
 
 export default function ChildcareDashboard({data}) {
   console.log(data)
+    if(data.length === 0){
+      return <LoadingSpinner/>
+  }
     if(data[0].last_period_date){
       return <OvulationDashboard data={data}/>
   }
     if(data[0].pregnance_week){
       return <PregnancyDashboard data={data}/>
-  }
-    if(data.length == 0){
-      return <LoadingSpinner/>
   }
 
   //Calculate current child's age

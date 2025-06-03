@@ -129,14 +129,14 @@ function getTipBasedOnSymptom(symptom) {
 
 export default function PregnancyDashboard({data}) {
   console.log(data)
+  if(!data || data.length === 0){
+    return <LoadingSpinner/>
+  }
     if(data[0].gender){
       return <ChildcareDashboard data={data}/>
   }
     if(data[0].sleep_hours){
       return <OvulationDashboard data={data}/>
-  }
-  if(!data || data.length === 0){
-    return <LoadingSpinner/>
   }
 
   // Generate tip based on latest symptom or fallback
