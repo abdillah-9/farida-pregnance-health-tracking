@@ -58,7 +58,9 @@ export default function page() {
             <div style={{fontSize:"14px", display:"flex", gap:"10px", justifyContent:"space-between",
             width:"100%",height:"100%", alignItems:"center", flexDirection:"column"}}>
               <DeletePrompt mutateDeleting={mutateDeleting}/>
-      <Container containerStyle={{width:"100%", display:"flex", justifyContent:"space-between"}}>
+      <Container containerStyle={{width:"100%", display:"flex", 
+        justifyContent:"space-between",gap:"20px",flexWrap:"wrap"
+      }}>
         <Texts textStyle={headingStyle}>Childcare</Texts>
         <Container containerStyle={buttonsContainer}>
           <Button buttonStyle={
@@ -143,7 +145,9 @@ export default function page() {
       <Form Childcare={fetched.ChildcareData} user={user} insertDataMutation={insertDataMutation}
        updateDataMutation={updateDataMutation}/>
       <DeletePrompt mutateDeleting={mutateDeleting}/>
-      <Container>
+      <Container containerStyle={{width:"100%", display:"flex", 
+        justifyContent:"space-between",gap:"20px",flexWrap:"wrap"
+      }}>
         <Texts textStyle={headingStyle}>Childcare</Texts>
         <Container containerStyle={buttonsContainer}>
           <Button buttonStyle={

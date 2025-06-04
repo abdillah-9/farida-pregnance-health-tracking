@@ -2,6 +2,10 @@ import React from 'react';
 import LineGraph from '../graphs/lineGraph';
 import LoadingSpinner from '@app/reusables/UI_components/LoadingSpinner';
 import PregnancyDashboard from './PregnancyDashboard';
+import Icon from '@app/reusables/UI_components/Icon';
+import { BsCalendar2Heart, BsDropletFill, BsDropletHalf, BsPersonBadge } from '@node_modules/react-icons/bs';
+import { TbCalendarUp, TbCircleDashed } from '@node_modules/react-icons/tb';
+import { GiCircleClaws, GiDroplets, GiEncirclement, GiStopwatch } from '@node_modules/react-icons/gi';
 
 const container = {
     padding:"1rem"
@@ -24,30 +28,35 @@ const sectionTitle = {
 const grid = {
   display: 'flex',
   flexWrap:"wrap",
-  gap: '20px',
   justifyContent:"space-between",
-  padding:"10px 15px",
+  gap: '20px',
+  padding:"20px",
   borderLeft:"2px solid rgba(73, 72, 72, 0.64)",
 };
 
 const card = {
   fontSize:"14px",
   display:"flex",
-  flexDirection:"column",
-  gap:"5px",
-  width:"180px",
-  padding: '10px',
+  gap:"15px",
+  minWidth:"220px",
+  padding: '15px',
   borderRadius: '5px',
   boxShadow: '3px 1px 15px rgba(0, 0, 0, 0.93)',
 };
+const miniCard ={
+  display:"flex",
+  flexDirection:"column",
+}
 
 const listItem = {
-  padding: '0.75rem',
-  backgroundColor: '#fff',
-  border: '1px solid #ddd',
-  borderRadius: '0.375rem',
-  boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-};
+  padding: '10px',
+  fontSize:"14px",
+  fontWeight:"light",
+  textAlign:"center",
+  width:"100%",
+  backgroundColor:"rgba(8, 161, 28, 0.76)",
+  color:"white",
+}
 
 const graphPlaceholder = {
   height: '200px',
@@ -80,6 +89,17 @@ const ctaButton = {
   fontWeight: '600',
   cursor: 'pointer',
 };
+const iconStyle={
+  fontSize:"25px",
+  color:"rgba(8, 161, 28, 0.76)",
+  boxShadow: '1px 2px 7px rgba(2, 88, 13, 0.96)',
+  height:"60px",
+  borderRadius:"50%",
+  width:"60px",
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center",
+}
 
 export default function OvulationDashboard({data}) {
     console.log(data)
@@ -103,47 +123,55 @@ export default function OvulationDashboard({data}) {
       {/* Grid Stats */}
       <div style={grid}>
         <div style={card}>
-            <strong>Name:</strong> <span>{data.slice(-1)[0]?.name || "- - -"}</span>
+          <Icon iconStyle={iconStyle}><BsPersonBadge/></Icon>
+          <div style={miniCard}>
+            <strong style={{color:"rgb(1, 41, 7)"}}>Age:</strong> 
+            <span>{data[latestDataIndex]?.age || "- - -"}</span>
+          </div>
         </div>
         <div style={card}>
-            <strong>Age:</strong> <span>{data[latestDataIndex]?.age || "- - -"}</span>
-        </div>
-        <div style={card}>
-            <strong>Last Period:</strong> 
+          <Icon iconStyle={iconStyle}><GiDroplets/></Icon>
+          <div style={miniCard}>
+            <strong style={{color:"rgb(1, 41, 7)"}}>Last Period:</strong> 
             <span>{data[latestDataIndex]?.last_period_date || "- - -"}</span>
+          </div>
         </div>
         <div style={card}>
-            <strong>Cycle Length:</strong> 
+          <Icon iconStyle={iconStyle}><GiEncirclement/></Icon>
+          <div style={miniCard}>
+            <strong style={{color:"rgb(1, 41, 7)"}}>Cycle Length:</strong> 
             <span>{data[latestDataIndex]?.cycle_length_days || "- - -"}</span>
+          </div>
         </div>
         <div style={card}>
-            <strong>Period Duration:</strong> <span>{data[latestDataIndex]?.cycle_length_days}</span>
+          <Icon iconStyle={iconStyle}><GiStopwatch/></Icon>
+          <div style={miniCard}>
+            <strong style={{color:"rgb(1, 41, 7)"}}>Period Duration:</strong> 
+            <span>{data[latestDataIndex]?.period_duration_days}</span>
+          </div>
         </div>
-        <div style={card}>
-            <strong>Regular Cycle:</strong> <span>{
-            data[latestDataIndex]?.cycle_length_days ? "YES" : "NO"
-            }</span>
-        </div>
-        <div style={card}>
-            <strong>Stress Level:</strong> <span>{data[latestDataIndex].stress_level || "- - -"}</span>
-        </div>
-        <div style={card}>
-            <strong>Sleep Hours:</strong> <span>{data[latestDataIndex].sleep_hours || "- - -"}</span>
-        </div>
-        <div style={card}>
-            <strong>Exercise Days/Week:</strong> 
+        {/* <div style={card}>
+          <Icon iconStyle={iconStyle}><BsCalendar2Heart/></Icon>
+          <div style={miniCard}>
+            <strong style={{color:"rgb(1, 41, 7)"}}>Expected upcoming period:</strong> 
             <span>
                 {
-                    data[latestDataIndex].day_week_exercise || "- - -"
+                    data[latestDataIndex]?.cycle_length_days ? "YES" : "NO"
                 }
             </span>
+          </div>
         </div>
         <div style={card}>
-            <strong>Diagnosed Conditions:</strong> 
-            <span>{
-                data[latestDataIndex].diagnised_conditions || "- - -"  
-            }</span>
-        </div>
+          <Icon iconStyle={iconStyle}><BsCalendar2Heart/></Icon>
+          <div style={miniCard}>
+            <strong style={{color:"rgb(1, 41, 7)"}}>Regular Cycle:</strong> 
+            <span>
+                {
+                    data[latestDataIndex]?.cycle_length_days ? "YES" : "NO"
+                }
+            </span>
+          </div>
+        </div> */}
       </div>
 
       {/* Graph */}
@@ -153,7 +181,7 @@ export default function OvulationDashboard({data}) {
       </div>
 
       {/* Recent Activity */}
-      <h3 style={title}>Recent Activity</h3>
+      <h3 style={title}>Menstrual details</h3>
       <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <li style={listItem}>🩸 Jan 5, 2025 - Period Started</li>
         <li style={listItem}>🔬 Jan 12, 2025 - Ovulation Logged</li>

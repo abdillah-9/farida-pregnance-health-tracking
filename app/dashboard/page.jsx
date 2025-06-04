@@ -189,6 +189,8 @@ export default function page() {
 const header = {
   display: "flex",
   justifyContent: "space-between",
+  gap:"20px",
+  flexWrap:"wrap",
   width: "100%",
 };
 const heading = {
