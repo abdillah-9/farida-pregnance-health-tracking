@@ -83,15 +83,15 @@ const ctaButton = {
 
 export default function OvulationDashboard({data}) {
     console.log(data)
-    if(data[0]?.gender){
-      return <ChildcareDashboard data={data}/>
-    }
-    if(data[0]?.pregnance_week){
-      return <PregnancyDashboard data={data}/>
-    }
     if(data.length == 0){
         return <div>Currently there's no data</div>
     }
+    // if(data[0].gender){
+    //   return <ChildcareDashboard data={data}/>
+    // }
+    // if(data[0].pregnance_week){
+    //   return <PregnancyDashboard data={data}/>
+    // }
 
     console.log("data in ovulation jsx "+JSON.stringify(data))
     const latestDataIndex = data.length - 1

@@ -16,7 +16,7 @@ export default function PregnancyBarChart({data}) {
         <Legend wrapperStyle={{fontSize:"14px"}}/>
         <Bar dataKey="pregnance_week" fill="#82ca9d" name="Pregnance week" />
         <Bar dataKey="fetal_HR" fill="#8884d8" name="Fetal HR" />
-        <Bar dataKey="mother_HR" fill="#8884d8" name="Mother HR" />
+        <Bar dataKey="mother_HR" fill="#FF8042" name="Mother HR" />
       </BarChart>
     </ResponsiveContainer>
   );

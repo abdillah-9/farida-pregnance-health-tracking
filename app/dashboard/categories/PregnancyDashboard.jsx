@@ -129,15 +129,15 @@ function getTipBasedOnSymptom(symptom) {
 
 export default function PregnancyDashboard({data}) {
   console.log(data)
-  if(!data || data.length === 0){
-    return <LoadingSpinner/>
+    if (!data || data.length === 0 || !data.slice(-1)[0]?.created_at) {
+      return <LoadingSpinner />;
   }
-    if(data[0].gender){
-      return <ChildcareDashboard data={data}/>
-  }
-    if(data[0].sleep_hours){
-      return <OvulationDashboard data={data}/>
-  }
+  //   if(data[0].gender){
+  //     return <ChildcareDashboard data={data}/>
+  // }
+  //   if(data[0].sleep_hours){
+  //     return <OvulationDashboard data={data}/>
+  // }
 
   console.log("created_at issue "+data.slice(-1)[0].created_at)
   // Generate tip based on latest symptom or fallback
@@ -201,29 +201,33 @@ export default function PregnancyDashboard({data}) {
               <div style={ul_cards}>
                 <strong>{"Date: "}</strong> 
                 {
+                  latest_symptom[0] ?
                   new Date(latest_symptom[0].created_at).toLocaleDateString("en-Us",{
                           year:"numeric", hour:"numeric",
                           month:"short", minute:"numeric",
                           day:"numeric", second:"numeric"
-                  })
+                  }) : "No recent symptom recorded"
                 }
               </div>
               <div style={ul_cards}>
                 <strong>{"Symptom: "}</strong>
                 {
-                  latest_symptom[0].symptoms
+                  latest_symptom[0] ?
+                  latest_symptom[0].symptoms : "---"
                 }
               </div>
               <div style={ul_cards}>
                 <strong>{"Pregnance week: "}</strong>
                 {
-                  latest_symptom[0].pregnance_week
+                  latest_symptom[0] ?
+                  latest_symptom[0].pregnance_week : "---"
                 }
               </div>
               <div style={ul_cards}>
                 <strong>{"Number of featus: "}</strong>
                 {
-                  latest_symptom[0].featus_number
+                  latest_symptom[0] ?
+                  latest_symptom[0].featus_number : "---"
                 }
               </div>
           </ul>
@@ -239,7 +243,7 @@ export default function PregnancyDashboard({data}) {
                       year:"numeric", hour:"numeric",
                       month:"short", minute:"numeric",
                       day:"numeric", second:"numeric"
-                })} - {entry.symptoms || "none"}
+                })} - {entry.symptoms || "no symptoms recorded"}
               </li>
             ))}
           </ul>

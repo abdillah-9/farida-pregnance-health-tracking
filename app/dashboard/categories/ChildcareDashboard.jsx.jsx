@@ -118,12 +118,12 @@ export default function ChildcareDashboard({data}) {
     if(data.length === 0){
       return <LoadingSpinner/>
   }
-    if(data[0].last_period_date){
-      return <OvulationDashboard data={data}/>
-  }
-    if(data[0].pregnance_week){
-      return <PregnancyDashboard data={data}/>
-  }
+  //   if(data[0].last_period_date){
+  //     return <OvulationDashboard data={data}/>
+  // }
+  //   if(data[0].pregnance_week){
+  //     return <PregnancyDashboard data={data}/>
+  // }
 
   //Calculate current child's age
   let prev_entry = {"prev_age":data.slice(-1)[0].baby_age_month,"prev_date":data.slice(-1)[0].created_at}
