@@ -11,7 +11,7 @@ import { getPregnanceData } from '@utils/apiPregnance'
 
 export default function AIpage({latestCategory,AI_response, setAI_response}) {
     //Import user, budget and expense data here
-    const {user, isLoading: userLoading} = useUser(AI_response, setAI_response);
+    const {user, isLoading: userLoading} = useUser();
 
     const {isLoading: ChildcareLoading, data: Childcare, error:ChildcareError} =  useQuery({
         queryKey: ['childcareData'],
@@ -28,7 +28,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
         queryFn: getPregnanceData
     });
 
-    const [userData, setuserData] = useState({})
+    const [userData, setuserData] = useState("")
 
     useEffect(() => {
       if (!user || !ovulation || !Pregnance || !Childcare) return;
@@ -40,6 +40,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
       // set userData
       if (latestCategory.category == "ovulation") {
         setuserData({ filteredOvulation });
+        console.log("userData has been set OK "+JSON.stringify(userData))
        }
       if (latestCategory.category == "pregnance") {
         setuserData({ filteredPregnance });
@@ -53,11 +54,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
     //fetch AI insights based on this api call
 
     useEffect(() => {
-      if (
-          (!userData.filteredOvulation || userData.filteredOvulation.length === 0) &&
-          (!userData.filteredPregnance || userData.filteredPregnance.length === 0 )&&
-          (!userData.filteredChildcare || userData.filteredChildcare.length === 0) 
-         ) {
+      if (userData && Object.keys(userData).length > 0) {
         console.log("userData is empty or incomplete.");
         return;
       }
@@ -123,6 +120,13 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
       }
 
     }, [userData, latestCategory]);
+
+    useEffect(() => {
+  if (userData) {
+    console.log("userData has been updated to: ", JSON.stringify(userData));
+  }
+}, [userData]);
+
 
     // if (ovulationLoading || PregnanceLoading || ChildcareLoading) {
     //     return <LoadingSpinner/>;

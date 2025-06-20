@@ -108,6 +108,7 @@ const iconStyle={
 }
 
 export default function OvulationDashboard({data, userData}) {
+    console.log("userdata in ovulation is "+JSON.stringify(userData))
     console.log(data)
     if(data.length == 0){
         return <div>Currently there's no data</div>
