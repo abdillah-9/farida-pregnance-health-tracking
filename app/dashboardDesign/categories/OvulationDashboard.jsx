@@ -111,7 +111,7 @@ export default function OvulationDashboard() {
       {/* Tips */}
       <h3 style={sectionTitle}>Tips & Suggestions</h3>
       <div style={tipBox}>
-        💡 <strong>Tip:</strong> Aim for 7–9 hours of sleep and track stress levels for better hormonal balance.
+        💡 <strong>Tip:</strong> Aim for 7-9 hours of sleep and track stress levels for better hormonal balance.
       </div>
 
       {/* CTA */}

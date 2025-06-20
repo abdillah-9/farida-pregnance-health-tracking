@@ -197,6 +197,7 @@ return (
     <FormContainer.Row formRow={formRow}>
       <FormContainer.Label labelStyle={labelStyle}>Previous Pregnancy Issues</FormContainer.Label>
       <FormContainer.Select inputStyle={inputStyle} fieldName="prev_pregnancy_issues" validation={validateRequired}>
+        <FormContainer.Option optionValue="none">none</FormContainer.Option>
         <FormContainer.Option optionValue="">Select</FormContainer.Option>
         <FormContainer.Option optionValue="miscarriage">
           Lost a pregnancy (miscarriage)

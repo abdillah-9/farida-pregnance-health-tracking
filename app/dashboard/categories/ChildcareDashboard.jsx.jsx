@@ -18,7 +18,7 @@ const container = {
 const title = {
   fontSize: '17px',
   fontWeight: "bold",
-  padding:"0px 0px 25px 0px",
+  padding:"20px 0px 25px 0px",
   color:"rgba(61, 61, 61, 0.8)",
   textTransform:"uppercase",
 };
@@ -72,12 +72,20 @@ const listItem = {
   borderRadius: '0.375rem',
 };
 
+
+const hint={
+  fontSize:"14px",
+  padding:"0px 0px 5px 0px",
+}
+
 const tipBox = {
-  backgroundColor: '#ecfccb',
   border: '1px solid #84cc16',
+  display:"flex",
+  flexWrap:"wrap",
+  gap:"15px",
+  backgroundColor: '#fff7ed',
   padding: '1rem',
   borderRadius: '0.5rem',
-  marginBottom: '1rem'
 };
 
 const ctaButton = {
@@ -113,7 +121,7 @@ const iconStyle={
   justifyContent:"center",
 }
 
-export default function ChildcareDashboard({data}) {
+export default function ChildcareDashboard({data, userData}) {
   console.log(data)
     if(data.length === 0){
       return <LoadingSpinner/>
@@ -201,10 +209,21 @@ export default function ChildcareDashboard({data}) {
         </div>
       </div>
 
-      <h3 style={subtitle}>Tips & Suggestions</h3>
+      {/* Tips */}
+      <h3 style={title}>Tips & Suggestions</h3>
       <div style={tipBox}>
-        👶 <strong>Tip:</strong> How to introduce solid foods
+        💡 <strong>Tip:</strong>
+        <div>
+          {
+            userData?
+            userData.hint.map((row, index)=>
+            <div style={hint} key={index}>{row}</div>
+            )
+            :"no data"
+          }
+        </div>
       </div>
+
     </div>
   );
 }

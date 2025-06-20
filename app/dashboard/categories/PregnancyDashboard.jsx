@@ -70,12 +70,19 @@ const miniTitle={
   padding:"0px 0px 10px 0px"
 }
 
+const hint={
+  fontSize:"14px",
+  padding:"0px 0px 5px 0px",
+}
+
 const tipBox = {
-  backgroundColor: '#fff1f2',
   border: '1px solid #fb7185',
+  display:"flex",
+  flexWrap:"wrap",
+  gap:"15px",
+  backgroundColor: '#fff7ed',
   padding: '1rem',
   borderRadius: '0.5rem',
-  marginBottom: '1rem'
 };
 
 const ctaButton = {
@@ -127,7 +134,7 @@ function getTipBasedOnSymptom(symptom) {
   }
 }
 
-export default function PregnancyDashboard({data}) {
+export default function PregnancyDashboard({data, userData}) {
   console.log(data)
     if (!data || data.length === 0 || !data.slice(-1)[0]?.created_at) {
       return <LoadingSpinner />;
@@ -255,9 +262,19 @@ export default function PregnancyDashboard({data}) {
         <PregnancyBarChart data={data.slice(-5)}/>
       </div>
 
-      <h3 style={subtitle}>Tips & Suggestions</h3>
+      {/* Tips */}
+      <h3 style={title}>Tips & Suggestions</h3>
       <div style={tipBox}>
-        🤰 <strong>Tip:</strong> {""}
+        💡 <strong>Tip:</strong>
+        <div>
+          {
+            userData?
+            userData.hint.map((row, index)=>
+            <div style={hint} key={index}>{row}</div>
+            )
+            :"no data"
+          }
+        </div>
       </div>
 
       {/* <button style={ctaButton}>+ Add Entry</button> */}

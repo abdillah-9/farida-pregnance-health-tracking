@@ -34,6 +34,10 @@ const grid = {
   borderLeft:"2px solid rgba(73, 72, 72, 0.64)",
 };
 
+const hint={
+  fontSize:"14px",
+  padding:"0px 0px 5px 0px",
+}
 const card = {
   fontSize:"14px",
   display:"flex",
@@ -71,11 +75,13 @@ const graphPlaceholder = {
 };
 
 const tipBox = {
+  display:"flex",
+  flexWrap:"wrap",
+  gap:"15px",
   backgroundColor: '#fff7ed',
   border: '1px solid #facc15',
   padding: '1rem',
   borderRadius: '0.5rem',
-  marginBottom: '1rem',
 };
 
 const ctaButton = {
@@ -101,7 +107,7 @@ const iconStyle={
   justifyContent:"center",
 }
 
-export default function OvulationDashboard({data}) {
+export default function OvulationDashboard({data, userData}) {
     console.log(data)
     if(data.length == 0){
         return <div>Currently there's no data</div>
@@ -181,17 +187,26 @@ export default function OvulationDashboard({data}) {
       </div>
 
       {/* Recent Activity */}
-      <h3 style={title}>Menstrual details</h3>
-      <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <li style={listItem}>🩸 Jan 5, 2025 - Period Started</li>
-        <li style={listItem}>🔬 Jan 12, 2025 - Ovulation Logged</li>
-        <li style={listItem}>📅 Feb 9, 2025 - Next Expected Ovulation</li>
-      </ul>
+<h3 style={title}>Menstrual details</h3>
+<ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+  <li style={listItem}>📅 {userData.predicted_ovulation_date || "N/A"} - Next Expected Ovulation</li>
+  <li style={listItem}>🩸 {userData.predicted_next_period_date || "N/A"} - Next Expected Period</li>
+</ul>
+
 
       {/* Tips */}
       <h3 style={title}>Tips & Suggestions</h3>
       <div style={tipBox}>
-        💡 <strong>Tip:</strong> Aim for 7–9 hours of sleep and track stress levels for better hormonal balance.
+        💡 <strong>Tip:</strong>
+        <div>
+          {
+            userData?
+            userData.hint.map((row, index)=>
+            <div style={hint} key={index}>{row}</div>
+            )
+            :"no data"
+          }
+        </div>
       </div>
 
       {/* CTA

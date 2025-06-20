@@ -8,8 +8,12 @@ import { getPregnanceData } from '@utils/apiPregnance';
 import { getChildcareData } from '@utils/apiChildcare';
 import { useQuery } from '@node_modules/@tanstack/react-query/build/legacy';
 import DashboardBody from './DashboardBody';
+import AIpage from '@app/ai/AIpage';
 
 export default function page() {
+  const [AI_response, setAI_response] = useState("")
+  const [latestCategory, setLatestCategory] = useState(false);
+
   const { user } = useUser();
 
   const { isLoading: ovulationLoading, data: ovulation } = useQuery({
@@ -160,6 +164,11 @@ export default function page() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+      <AIpage 
+        AI_response={AI_response} 
+        setAI_response={setAI_response}
+        latestCategory={latestCategory}
+      />
       {/* DASHBOARD HEADING */}
       <div style={header}>
         <div style={heading}>Dashboard</div>
@@ -178,7 +187,9 @@ export default function page() {
       <div>
         {
           statsValues.length === 0 ? "" :
-          <DashboardBody statsValues={statsValues} />
+          <div>
+            <DashboardBody setLatestCategory={setLatestCategory} statsValues={statsValues} userData={AI_response}/>
+          </div>
         }
       </div>
     </div>

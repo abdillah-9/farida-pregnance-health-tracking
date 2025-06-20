@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ChildcareDashboard from "./categories/ChildcareDashboard.jsx";
 import OvulationDashboard from "./categories/OvulationDashboard";
 import PregnancyDashboard from "./categories/PregnancyDashboard";
 import LoadingSpinner from '@app/reusables/UI_components/LoadingSpinner.jsx';
 
-export default function DashboardBody({statsValues}) {
+export default function DashboardBody({setLatestCategory,statsValues, userData}) {
     if(!statsValues || statsValues.length === 0){
         return <LoadingSpinner/>
     }
- const data =
+        const data =
          statsValues?.ovulationYearly ? {
              "ovulation": statsValues.ovulationYearly,
              "pregnance": statsValues.pregnanceYearly,
@@ -39,21 +39,33 @@ export default function DashboardBody({statsValues}) {
      const dates = [latestOvulationDate, latestPregnanceDate, latestChildcareDate];
      // Find the latest by sorting descending and picking the first
      const latestData = dates.sort((a, b) => b.date - a.date)[0];
+
+     useEffect(()=>{
+        setLatestCategory(latestData);
+     },[])
+
      console.log("latestData "+JSON.stringify(latestData));
  
      return (
-         <div style={{height:"75vh", overflow:"auto",  boxShadow: '1px 2px 10px rgba(50,50,50,1)',}}>
+         <div style={
+                    {
+                        height:"70vh", 
+                        overflow:"auto",  
+                        boxShadow: '1px 2px 10px rgba(50,50,50,1)',
+                        padding:"0px 0px 20px 0px"
+                    }
+                }>
             {
              latestData.category === "ovulation" &&
-             <OvulationDashboard key={"ovulation"} data={data.ovulation}/>
+             <OvulationDashboard key={"ovulation"} data={data.ovulation} userData={userData}/>
             }
             {
              latestData.category === "pregnance" &&
-             <PregnancyDashboard key={"pregnance"} data={data.pregnance} />
+             <PregnancyDashboard key={"pregnance"} data={data.pregnance}  userData={userData}/>
             }
             {
              latestData.category === "childcare" &&
-             <ChildcareDashboard key={"childcare"} data={data.childcare} />
+             <ChildcareDashboard key={"childcare"} data={data.childcare} userData={userData} />
             }
              
          </div>
