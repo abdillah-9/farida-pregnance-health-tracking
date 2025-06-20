@@ -65,7 +65,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
       if(latestCategory.category == "ovulation"){
         const fetchData = async () => {
           try {
-            const response = await fetch('https://frank-business-ai.onrender.com/farida-ovulation-api', {
+            const response = await fetch('https://frank-business-ai.onrender.com/farida-health-api', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(userData)
@@ -85,7 +85,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
       if(latestCategory.category == "pregnance"){
         const fetchData = async () => {
           try {
-            const response = await fetch('https://frank-business-ai.onrender.com/farida-pregnancy-api', {
+            const response = await fetch('https://frank-business-ai.onrender.com/farida-health-api', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(userData)
@@ -105,7 +105,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
       if(latestCategory.category == "childcare"){
         const fetchData = async () => {
           try {
-            const response = await fetch('https://frank-business-ai.onrender.com/farida-childcare-api', {
+            const response = await fetch('https://frank-business-ai.onrender.com/farida-health-api', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(userData)
