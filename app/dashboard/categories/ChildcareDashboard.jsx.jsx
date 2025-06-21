@@ -216,7 +216,7 @@ export default function ChildcareDashboard({data, userData}) {
         <div>
           {
             userData?
-            userData.hint.map((row, index)=>
+            userData?.hint?.map((row, index)=>
             <div style={hint} key={index}>{row}</div>
             )
             :"no data"

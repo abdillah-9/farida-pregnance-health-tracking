@@ -54,7 +54,7 @@ export default function AIpage({latestCategory,AI_response, setAI_response}) {
     //fetch AI insights based on this api call
 
     useEffect(() => {
-      if (userData && Object.keys(userData).length > 0) {
+      if (!userData && Object.keys(userData).length > 0) {
         console.log("userData is empty or incomplete.");
         return;
       }

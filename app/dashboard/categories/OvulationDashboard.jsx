@@ -56,7 +56,6 @@ const listItem = {
   padding: '10px',
   fontSize:"14px",
   fontWeight:"light",
-  textAlign:"center",
   width:"100%",
   backgroundColor:"rgba(8, 161, 28, 0.76)",
   color:"white",
@@ -189,7 +188,7 @@ export default function OvulationDashboard({data, userData}) {
 
       {/* Recent Activity */}
 <h3 style={title}>Menstrual details</h3>
-<ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+<ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems:"center" }}>
   <li style={listItem}>📅 {userData.predicted_ovulation_date || "N/A"} - Next Expected Ovulation</li>
   <li style={listItem}>🩸 {userData.predicted_next_period_date || "N/A"} - Next Expected Period</li>
 </ul>
@@ -202,7 +201,7 @@ export default function OvulationDashboard({data, userData}) {
         <div>
           {
             userData?
-            userData.hint.map((row, index)=>
+            userData?.hint?.map((row, index)=>
             <div style={hint} key={index}>{row}</div>
             )
             :"no data"
