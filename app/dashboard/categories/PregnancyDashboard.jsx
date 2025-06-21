@@ -269,9 +269,10 @@ export default function PregnancyDashboard({data, userData}) {
         <div>
           {
             userData?
-            userData.hint.map((row, index)=>
-            <div style={hint} key={index}>{row}</div>
-            )
+            // userData.hint.map((row, index)=>
+            // <div style={hint} key={index}>{row}</div>
+            // )
+            "userdata"
             :"no data"
           }
         </div>
